@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class RecAadapter(private val pizzaList : ArrayList<Pizza>) : RecyclerView.Adapter<RecAadapter.ViewHolder>() {
+class RecAadapter(private var pizzaList : ArrayList<Pizza>) : RecyclerView.Adapter<RecAadapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -18,6 +18,13 @@ class RecAadapter(private val pizzaList : ArrayList<Pizza>) : RecyclerView.Adapt
         val tvName: TextView = itemView.findViewById(R.id.tvName)
         val tvIng: TextView = itemView.findViewById(R.id.tvIng)
         val constraint_row : ConstraintLayout = itemView.findViewById(R.id.constraint_row)
+    }
+
+    fun onApplySearch(pizzaList: ArrayList<Pizza>){
+
+        this.pizzaList = pizzaList
+        notifyDataSetChanged()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

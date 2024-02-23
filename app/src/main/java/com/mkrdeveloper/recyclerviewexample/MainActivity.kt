@@ -2,8 +2,11 @@ package com.mkrdeveloper.recyclerviewexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,30 +23,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         imageId = arrayOf(
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p4,
-            R.drawable.p5,
-            R.drawable.p6
+            R.drawable.a,
+            R.drawable.b,
+            R.drawable.c,
+            R.drawable.d,
+            R.drawable.e
         )
 
         names = arrayOf(
-            "pizza1",
-            "pizza2",
-            "pizza3",
-            "pizza4",
-            "pizza5",
-            "pizza6"
+            "Баварская",
+            "Вау! Кебаб",
+            "Пепперони с грибами",
+            "Ветчина и огурчики",
+            "Пицца Жюльен"
         )
 
         ingredients = arrayOf(
-            "Tomato sos, cheese, oregano",
-            "Tomato sos, cheese, oregano",
-            "Tomato sos, cheese, oregano",
-            "Tomato sos, cheese, oregano",
-            "Tomato sos, cheese, oregano",
-            "Tomato sos, cheese, oregano"
+            "Острые колбаски чоризо, маринованные огурчики, красный лук, томаты, горчичный соус, моцарелла, фирменный томатный соус",
+            "Мясо говядины, соус ранч, сыр моцарелла, сладкий перец, томаты, красный лук и фирменный томатный соус",
+            "Пикантная пепперони, моцарелла, шампиньоны, соус альфредо",
+            "Соус ранч, моцарелла, ветчина из цыпленка, маринованные огурчики, красный лук",
+            "Цыпленок, шампиньоны, ароматный грибной соус, лук, сухой чеснок, моцарелла, смесь сыров чеддер и пармезан, фирменный соус альфредо"
         )
 
 
@@ -56,8 +56,40 @@ class MainActivity : AppCompatActivity() {
 
         getData()
 
-        recView.adapter = RecAadapter(itemArrayList)
+        val adapter = RecAadapter(itemArrayList)
+        recView.adapter = adapter
 
+        val searchView = findViewById<SearchView>(R.id.searchView)
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                val searchList = ArrayList<Pizza>()
+
+
+                if (newText != null){
+                    for (i in itemArrayList){
+                        if (i.name.lowercase(Locale.ROOT).contains(newText)){
+                            searchList.add(i)
+                        }
+                    }
+                    if (searchList.isEmpty()){
+                        Toast.makeText(this@MainActivity, " No Data", Toast.LENGTH_SHORT).show()
+                    }else{
+
+                        adapter.onApplySearch(searchList)
+                    }
+                }
+
+
+
+                return true
+            }
+
+        })
     }
 
     private fun getData() {
