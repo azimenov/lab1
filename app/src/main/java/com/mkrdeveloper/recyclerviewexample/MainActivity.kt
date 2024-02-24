@@ -2,14 +2,13 @@ package com.mkrdeveloper.recyclerviewexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var imageId: Array<Int>
     private lateinit var names: Array<String>
@@ -46,11 +45,9 @@ class MainActivity : AppCompatActivity() {
             "Цыпленок, шампиньоны, ароматный грибной соус, лук, сухой чеснок, моцарелла, смесь сыров чеддер и пармезан, фирменный соус альфредо"
         )
 
-
         recView = findViewById(R.id.recView)
         recView.layoutManager = LinearLayoutManager(this)
         recView.setHasFixedSize(true)
-
 
         itemArrayList = arrayListOf()
 
@@ -69,7 +66,6 @@ class MainActivity : AppCompatActivity() {
 
                 val searchList = ArrayList<Pizza>()
 
-
                 if (newText != null){
                     for (i in itemArrayList){
                         if (i.name.lowercase(Locale.ROOT).contains(newText)){
@@ -83,8 +79,6 @@ class MainActivity : AppCompatActivity() {
                         adapter.onApplySearch(searchList)
                     }
                 }
-
-
 
                 return true
             }
